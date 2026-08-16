@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#120b18">
+<title>For You ❤️</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@500;600&display=swap');
+
+:root{
+  --bg:#0d0910; --card:rgba(255,255,255,.075); --line:rgba(255,255,255,.12);
+  --text:#fff7fb; --muted:#cdbfc8; --pink:#ff78ae; --pink2:#ffb6d2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(circle at 15% 10%,rgba(255,91,153,.18),transparent 28%),
+  radial-gradient(circle at 85% 25%,rgba(179,92,255,.12),transparent 30%),var(--bg);
+  color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden
+}
+button{font:inherit}
+#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.particle{position:absolute;opacity:.45;animation:float linear infinite}
+.page{position:relative;z-index:1;max-width:900px;margin:auto;padding:22px}
+section{min-height:100svh;display:grid;place-items:center;padding:70px 0}
+.hero{text-align:center}
+.kicker{letter-spacing:.2em;text-transform:uppercase;font-size:.72rem;color:var(--pink2)}
+h1,h2{font-family:"Playfair Display",serif;font-weight:500}
+h1{font-size:clamp(3.2rem,12vw,7rem);line-height:.92;margin:18px 0}
+h2{font-size:clamp(2.2rem,8vw,4.2rem);margin:0 0 16px}
+p{color:var(--muted);line-height:1.75}
+.subtitle{max-width:580px;margin:0 auto 28px;font-size:1.05rem}
+.btn{
+ border:1px solid var(--line);background:rgba(255,255,255,.09);color:white;
+ padding:14px 22px;border-radius:999px;cursor:pointer;transition:.25s;
+ backdrop-filter:blur(15px)
+}
+.btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.14)}
+.primary{background:linear-gradient(135deg,#ff5b9d,#c978ff);border:0;box-shadow:0 12px 40px rgba(255,91,157,.25)}
+.scroll{margin-top:35px;font-size:.8rem;color:#a999a4}
+.glass{
+ background:var(--card);border:1px solid var(--line);border-radius:28px;
+ padding:30px;backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.25)
+}
+.center{text-align:center;width:min(720px,100%)}
+.heart-zone{height:390px;position:relative;overflow:hidden;border-radius:24px;margin-top:25px;background:rgba(0,0,0,.12)}
+.heart{
+ position:absolute;border:0;background:none;color:#ff82b3;font-size:32px;cursor:pointer;
+ animation:drift 5s linear forwards;filter:drop-shadow(0 0 12px rgba(255,120,174,.35))
+}
+@keyframes drift{from{transform:translateY(430px) rotate(0)}to{transform:translateY(-80px) rotate(25deg)}}
+.progress{height:5px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;margin:22px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff6ba8,#b778ff);transition:.3s}
+.cards{display:flex;gap:14px;overflow-x:auto;padding:10px 2px 20px;scroll-snap-type:x mandatory}
+.reason{min-width:82%;scroll-snap-align:center;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+.reason small{color:var(--pink2);letter-spacing:.12em}
+.reason strong{font-family:"Playfair Display";font-size:2rem;font-weight:500;margin-top:12px}
+.memory-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.memory{
+ min-height:180px;border-radius:22px;border:1px solid var(--line);padding:20px;
+ display:flex;flex-direction:column;justify-content:flex-end;
+ background:linear-gradient(145deg,rgba(255,120,174,.18),rgba(150,100,255,.08))
+}
+.memory b{font-family:"Playfair Display";font-size:1.4rem}
+.quiz button{margin:7px}
+#secret{display:none}
+.secret-heart{font-size:6rem;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+#toast{
+ position:fixed;left:50%;bottom:25px;transform:translate(-50%,30px);opacity:0;
+ background:#fff;color:#24151e;padding:12px 18px;border-radius:999px;z-index:20;transition:.3s
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.modal{
+ position:fixed;inset:0;background:rgba(7,4,9,.78);backdrop-filter:blur(15px);
+ display:none;place-items:center;z-index:10;padding:22px
+}
+.modal .glass{max-width:520px;text-align:center}
+.close{float:right;background:none;border:0;color:white;font-size:1.5rem;cursor:pointer}
+
+.photo-feature{
+  width:min(760px,100%); margin:28px auto 0; position:relative; overflow:hidden;
+  border-radius:30px; border:1px solid var(--line); background:rgba(255,255,255,.05);
+  box-shadow:0 30px 100px rgba(0,0,0,.35)
+}
+.photo-feature img{width:100%;height:min(72svh,680px);object-fit:cover;display:block;cursor:pointer}
+.photo-caption{position:absolute;left:18px;right:18px;bottom:18px;padding:16px 18px;border-radius:20px;
+ background:rgba(10,6,12,.58);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.13)}
+.photo-caption b{font-family:"Playfair Display";font-size:1.35rem}
+.gallery{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:18px}
+.gallery-card{position:relative;min-height:270px;overflow:hidden;border-radius:24px;border:1px solid var(--line);cursor:pointer}
+.gallery-card.tall{grid-row:span 2;min-height:555px}
+.gallery-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.gallery-card:hover img{transform:scale(1.04)}
+.gallery-card span{position:absolute;left:14px;bottom:14px;background:rgba(10,6,12,.58);padding:9px 12px;border-radius:999px;backdrop-filter:blur(10px);font-size:.78rem}
+.music-card{display:grid;gap:12px;margin-top:24px}
+.song{
+ display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 18px;
+ border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.055)
+}
+.song .meta{display:flex;align-items:center;gap:13px;text-align:left}
+.song-icon{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff6ba8,#a978ff)}
+.song b{display:block}.song small{color:var(--muted)}
+.song a{color:white;text-decoration:none}
+@media(max-width:600px){.gallery{grid-template-columns:1fr}.gallery-card.tall{grid-row:auto;min-height:440px}.gallery-card{min-height:300px}}
+
+@media(max-width:600px){.page{padding:16px}.glass{padding:23px}.memory-grid{grid-template-columns:1fr}.reason{min-width:88%}}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div class="page">
+
+<section class="hero">
+  <div class="kicker">A little something for you</div>
+  <h1>Hey,<br><i>Shruti.</i></h1>
+  <p class="subtitle">I could have just sent you a message… but my cutie deserves something a little more special.</p>
+  <button class="btn primary" onclick="go('hearts')">Open it ❤️</button>
+  <div class="scroll">↓ keep going</div>
+</section>
+
+
+<section>
+ <div class="center">
+  <div class="kicker">A face I could never get tired of</div>
+  <h2>My Shruti. ❤️</h2>
+  <p>Somewhere between a Valorant lobby and all those conversations, you became my favorite person.</p>
+  <div class="photo-feature" onclick="openPhoto('shruti_closeup.jpg','The girl who became my peace. ❤️')">
+    <img src="shruti_closeup.jpg" alt="Shruti">
+    <div class="photo-caption"><b>My cuteie.</b><br><span style="color:var(--muted)">I don't think you realize how pretty you are to me.</span></div>
+  </div>
+  <div class="gallery">
+    <div class="gallery-card tall" onclick="openPhoto('shruti_jaipur.jpg','Look at that smile. That smile is dangerous. ❤️')">
+      <img src="shruti_jaipur.jpg" alt="Shruti smiling in Jaipur">
+      <span>That smile → my weakness</span>
+    </div>
+    <div class="gallery-card" onclick="openPhoto('shruti_mirror.jpg','Still my favorite mirror selfie. 👀')">
+      <img src="shruti_mirror.jpg" alt="Shruti mirror photo">
+      <span>My pretty girl</span>
+    </div>
+    <div class="gallery-card" onclick="openPhoto('shruti_closeup.jpg','Yes, I am still going to stare. ❤️')">
+      <img src="shruti_closeup.jpg" alt="Shruti close-up">
+      <span>Okay… one more</span>
+    </div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="center glass">
+  <div class="kicker">Our soundtrack</div>
+  <h2>Two songs. One us. 🎧</h2>
+  <p>These songs are staying here because they remind me of you. Tap play and let the website become our little world.</p>
+  <div class="music-card">
+    <div class="song">
+      <div class="meta"><div class="song-icon">▶</div><div><b>Janiye</b><small>Vishal Mishra · Rashmeet Kaur</small></div></div>
+      <a class="btn primary" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=H1YR5rsScC8">Play ↗</a>
+    </div>
+    <div class="song">
+      <div class="meta"><div class="song-icon">♫</div><div><b>Duniyaa</b><small>Akhil · Dhvani Bhanushali</small></div></div>
+      <a class="btn primary" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hVCYwwFwGEE">Play ↗</a>
+    </div>
+  </div>
+  <p style="font-size:.82rem;margin-top:20px">Tip: start one of them, then come back here and continue scrolling. ❤️</p>
+ </div>
+</section>
+
+<section id="hearts">
+ <div class="center">
+  <div class="kicker">01 · Find them</div>
+  <h2>Catch the hearts, Shruti.</h2>
+  <p>Tap 7 hearts. I hid a few pieces of my heart in them.</p>
+  <div class="progress"><span id="bar"></span></div>
+  <div class="heart-zone" id="heartZone"></div>
+ </div>
+</section>
+
+<section>
+ <div class="center">
+  <div class="kicker">02 · Reasons</div>
+  <h2>Seven little reasons.</h2>
+  <p>Swipe through them. And yes, I know there are way more than seven.</p>
+  <div class="cards">
+   <div class="glass reason"><small>01</small><strong>The way you breathe.</strong><p>Even the tiniest things about you have somehow become my favorite things.</p></div>
+   <div class="glass reason"><small>02</small><strong>Your jokes.</strong><p>The way you randomly crack jokes and make everything lighter is so you.</p></div>
+   <div class="glass reason"><small>03</small><strong>Your extrovert energy.</strong><p>You're so unapologetically you, and honestly, I love watching you light up a room.</p></div>
+   <div class="glass reason"><small>04</small><strong>You were my peace.</strong><p>When you were alone and healing, I listened. Somewhere along the way, you became my peace too.</p></div>
+   <div class="glass reason"><small>05</small><strong>You understand my overthinking.</strong><p>You supported me through my decisions, reassured me, and never made me feel like I was too much.</p></div>
+   <div class="glass reason"><small>06</small><strong>You love without conditions.</strong><p>You love me as I am, without keeping score or asking me to become someone else.</p></div>
+   <div class="glass reason"><small>07</small><strong>You're my cutie.</strong><p>My favorite person, my best friend, and the best decision I ever made with my heart.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="center">
+  <div class="kicker">03 · Us</div>
+  <h2>Little moments.</h2>
+  <p>Replace these with your real memories and photos.</p>
+  <div class="memory-grid">
+   <div class="memory"><small>THE BEGINNING</small><b>“We met in Valorant.”</b><p>Who knew one game would introduce me to my favorite person?</p></div>
+   <div class="memory"><small>BEST FRIENDS</small><b>“Then somehow, you became my BSF.”</b><p>Before I knew it, talking to you became one of the best parts of my day.</p></div>
+   <div class="memory"><small>THE BEST DECISION</small><b>“Friendship became us.”</b><p>Turning what we had into a relationship is still one of the best decisions I've ever made.</p></div>
+   <div class="memory"><small>MY PEACE</small><b>“And now it's Shruti & Raghav.”</b><p>You were there for me when I overthought everything. You supported me, reassured me, and loved me through it.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="center glass quiz">
+  <div class="kicker">04 · Very serious question</div>
+  <h2>Who became my favorite person? 👀</h2>
+  <p>Choose carefully. There is absolutely a correct answer.</p>
+  <button class="btn" onclick="answer('you')">Shruti 😌</button>
+  <button class="btn" onclick="answer('me')">Raghav 😭</button>
+  <button class="btn" onclick="answer('both')">Obviously Shruti ❤️</button>
+ </div>
+</section>
+
+<section>
+ <div class="center">
+  <div class="kicker">05 · One last thing</div>
+  <h2>There's a secret.</h2>
+  <p>Tap the button. Don't pretend you're not curious.</p>
+  <button class="btn primary" onclick="openSecret()">Unlock it 🔐</button>
+  <div id="secret" class="glass" style="margin-top:25px">
+    <div class="secret-heart">♥</div>
+    <h2>It's you.</h2>
+    <p>If I got to choose my favorite person again, in every version of my life…</p>
+    <h2><i>I'd choose you.</i></h2>
+    <p>Always. ❤️</p>
+  </div>
+ </div>
+</section>
+
+<section style="min-height:70svh">
+ <div class="center">
+  <div class="kicker">Made with love</div>
+  <h2>For Shruti, always.</h2>
+  <p>From a Valorant lobby to best friends to us… and somehow, my favorite song sounds better because it reminds me of you. ❤️</p>
+  <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Again ↺</button>
+ </div>
+</section>
+</div>
+
+<div id="toast"></div>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+ <div class="glass">
+  <button class="close" onclick="closeModal()">×</button>
+  <div id="modalVisual" style="font-size:3rem">💌</div>
+  <h2 id="modalTitle">For you</h2>
+  <p id="modalText"></p>
+ </div>
+</div>
+
+<script>
+const zone=document.getElementById('heartZone'), bar=document.getElementById('bar');
+let caught=0;
+const messages=[
+ "Shruti found one. ❤️","My cutie is getting warmer.","Remember when we met in Valorant?","One more…",
+ "You became my peace.","Almost there, chalant girl 👀","Okay, I give up… you're my favorite."
+];
+function spawn(){
+ if(caught>=7)return;
+ const h=document.createElement('button'); h.className='heart'; h.textContent='♥';
+ h.style.left=(Math.random()*88+4)+'%'; h.style.animationDuration=(3.5+Math.random()*2.5)+'s';
+ h.onclick=()=>{
+   caught++; h.remove(); bar.style.width=(caught/7*100)+'%';
+   toast(messages[caught-1]);
+   if(caught===7)setTimeout(()=>openModal("You found all of them, Shruti ❤️","And somehow, while you were looking for seven hearts, I was thinking about the girl who started as my Valorant teammate, became my best friend, and then became my favorite person."),450);
+ };
+ zone.appendChild(h);
+ setTimeout(()=>h.remove(),6500);
+}
+setInterval(()=>{if(caught<7 && zone.children.length<3)spawn()},800);
+for(let i=0;i<3;i++)setTimeout(spawn,i*500);
+
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');setTimeout(()=>x.classList.remove('show'),1800)}
+function openModal(t,m){
+ document.getElementById('modalVisual').innerHTML='💌';
+ document.getElementById('modalTitle').textContent=t;
+ document.getElementById('modalText').textContent=m;
+ document.getElementById('modal').style.display='grid'
+}
+function openPhoto(src,caption){
+ document.getElementById('modalVisual').innerHTML='<img src="'+src+'" alt="Shruti" style="width:100%;max-height:58vh;object-fit:contain;border-radius:20px">';
+ document.getElementById('modalTitle').textContent='Shruti ❤️';
+ document.getElementById('modalText').textContent=caption;
+ document.getElementById('modal').style.display='grid'
+}
+function closeModal(){document.getElementById('modal').style.display='none'}
+function answer(x){
+ if(x==='you')toast("You really think so? 😂❤️");
+ if(x==='me')toast("Maybe… but I definitely fell hard. 😭");
+ if(x==='both')toast("Correct. Because somehow we both found home in each other. ❤️");
+}
+function openSecret(){
+ document.getElementById('secret').style.display='block';
+ document.getElementById('secret').scrollIntoView({behavior:'smooth',block:'center'});
+}
+for(let i=0;i<35;i++){
+ const p=document.createElement('span');p.className='particle';p.textContent=Math.random()>.5?'✦':'·';
+ p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';
+ p.style.fontSize=(8+Math.random()*16)+'px';p.style.animationDuration=(8+Math.random()*15)+'s';
+ document.getElementById('particles').appendChild(p);
+}
+</script>
+</body>
+</html>
